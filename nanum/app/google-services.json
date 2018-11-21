@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "137861947509",
+    "firebase_url": "https://nanum-234a8.firebaseio.com",
+    "project_id": "nanum-234a8",
+    "storage_bucket": "nanum-234a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137861947509:android:aeb243663ff3d174",
+        "android_client_info": {
+          "package_name": "com.example.chanho.nanum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137861947509-en59srn9tpkkrm9vjga41lft2pm1duu1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0IvYKgZF1tA3kjc3dBujO3P7HU8IOwEA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
