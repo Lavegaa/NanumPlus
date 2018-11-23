@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/top_explain"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+        <TextView
+            android:id="@+id/text_explain_title"
+            android:textStyle="bold"
+            android:textSize="8pt"
+            android:gravity="center"
+            android:text="공고모집"
+            android:layout_width="230dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/text_explain_field"
+            android:layout_toRightOf="@+id/text_explain_title"
+            android:textSize="8pt"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="카테고리"
+            android:layout_width="74dp"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:layout_toRightOf="@+id/text_explain_field"
+            android:textSize="8pt"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="기간"
+            android:layout_width="74dp"
+            android:layout_height="match_parent" />
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/top_explain"
+        android:id="@+id/recruitviewfragment_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btn_addrecruit"
+        android:text="추가"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+</RelativeLayout>

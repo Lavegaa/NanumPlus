@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddRecruitActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="35dp">
+
+        <ImageView
+            android:src="@drawable/logo_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/my_toolbar"
+        android:layout_marginTop="5dp"
+        android:id="@+id/text_edit_title"
+        android:textSize="8pt"
+        android:hint="제목"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <EditText
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/text_edit_title"
+        android:id="@+id/text_edit_field"
+        android:textSize="8pt"
+        android:hint="카테고리"
+        android:layout_width="160dp"
+        android:layout_height="40dp" />
+
+    <EditText
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/text_edit_title"
+        android:layout_toRightOf="@+id/text_edit_field"
+        android:id="@+id/text_edit_date"
+        android:textSize="8pt"
+        android:hint="기간"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        tools:text="@tools:sample/date/ddmmyy" />
+
+    <EditText
+        android:background="@null"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/text_edit_body"
+        android:textSize="8pt"
+        android:hint="내용을 입력하세요"
+        android:layout_below="@+id/text_edit_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_submit"
+        android:theme="@style/ButtonStyle"
+        android:textSize="10pt"
+        android:text="작성"
+        android:layout_marginTop="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+</RelativeLayout>
