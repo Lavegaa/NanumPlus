@@ -173,6 +173,7 @@ class CommentActivity : AppCompatActivity() {
                     var url = task.result["image"]
                     Glide.with(holder.itemView.context).load(url).apply(RequestOptions().circleCrop()).into(view.commentviewItem_imageview_profile)
                 }
+
             }
         }
     }

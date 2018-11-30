@@ -183,7 +183,7 @@ class DetailviewFragment : Fragment() {
         val contentDTOs: ArrayList<ContentDTO>
         val contentUidList: ArrayList<String>
         init {
-                        contentDTOs = ArrayList()
+            contentDTOs = ArrayList()
             contentUidList = ArrayList()
             //현재 로그인된 유저의 currentUserUid
             var uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -196,6 +196,7 @@ class DetailviewFragment : Fragment() {
                     var item = snapshot.toObject(ContentDTO::class.java)
                     contentDTOs.add(item)
                     contentUidList.add(snapshot.id)
+
                 }
                 notifyDataSetChanged()
             }
@@ -212,6 +213,7 @@ class DetailviewFragment : Fragment() {
         }
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             val viewHolder = (holder as CustomViewHolder).itemView
+            var startfragment = "detailview"
             firestore?.collection("profileImages")?.document(contentDTOs[position].uid!!)?.get()?.addOnCompleteListener {
                 task ->
                 if(task.isSuccessful){
@@ -219,6 +221,7 @@ class DetailviewFragment : Fragment() {
                     Glide.with(holder.itemView.context).load(url).apply(RequestOptions().circleCrop()).into(viewHolder.detailviewitem_profile_image)
                 }
             }
+
             //유저 아이디
             viewHolder.detailviewitem_profile_textview.text = contentDTOs!![position].userId
             //이미지
@@ -243,6 +246,7 @@ class DetailviewFragment : Fragment() {
                 var bundle = Bundle()
                 bundle.putString("destinationUid", contentDTOs[position].uid)
                 bundle.putString("userId", contentDTOs[position].userId)
+                bundle.putString("startfragment",startfragment)
                 fragment.arguments = bundle
                 activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_content, fragment).commit()
             }
@@ -253,6 +257,7 @@ class DetailviewFragment : Fragment() {
                 startActivity(intent)
             }
         }
+
         private fun favoriteEvent(position: Int) {
             var tsDoc = firestore?.collection("images")?.document(contentUidList[position])
             firestore?.runTransaction { transaction ->

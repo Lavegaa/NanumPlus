@@ -3,8 +3,10 @@ package com.example.chanho.nanum
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.Toast
+import com.example.chanho.nanum.model.ProfileDTO
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -15,10 +17,11 @@ import com.google.firebase.auth.AuthResult
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-
+    var firestore : FirebaseFirestore? = null
     var googleSignInClient: GoogleSignInClient? = null
     var auth : FirebaseAuth? = null
     var GOOGLE_LOGIN_CODE = 9001
@@ -26,6 +29,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance();
         email_login_button.setOnClickListener {
             createAndLoginEmail()
@@ -73,8 +77,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun moveMainPage(user: FirebaseUser?){
-        if(user != null ){
-            startActivity(Intent(this,MainActivity::class.java))
+        if(user != null ) {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }

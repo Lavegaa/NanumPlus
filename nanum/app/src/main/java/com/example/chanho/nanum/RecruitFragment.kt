@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
+import com.example.chanho.nanum.model.ProfileDTO
 import com.example.chanho.nanum.model.RecruitDTO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,15 +21,32 @@ import kotlinx.android.synthetic.main.item_recruit.view.*
 class RecruitFragment : Fragment(){
 
     var firestore : FirebaseFirestore? = null
-    var user : FirebaseAuth? = null
-
+    var auth : FirebaseAuth? = null
+    var myProfile : ProfileDTO? = null
+    var Uid : String? = null
+    var name : String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = LayoutInflater.from(inflater.context).inflate(R.layout.fragment_recruit, container, false)
         firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+        myProfile = ProfileDTO()
+        Uid = FirebaseAuth.getInstance().currentUser?.uid
+
+
+        firestore?.collection("profiles")?.whereEqualTo("uid", Uid)?.get()?.addOnCompleteListener { Task->
+            var profileDTO = Task.result.documents.get(0).toObject(ProfileDTO::class.java)
+
+            name = profileDTO.name
+
+            if(profileDTO.kind == 2){
+                view.btn_addrecruit.visibility = View.VISIBLE
+            }
+        }
 
         view.recruitviewfragment_recyclerview.adapter = RecruitRecyclerviewAdapter()
         view.recruitviewfragment_recyclerview.layoutManager = LinearLayoutManager(activity)
+
 
         view.btn_addrecruit.setOnClickListener { v ->
             var intent = Intent(v.context,AddRecruitActivity::class.java)
@@ -53,12 +72,10 @@ class RecruitFragment : Fragment(){
                 if(querySnapshot == null) return@addSnapshotListener
                 recruitDTOs.clear()
                 recruitUidList.clear()
-                Log.d("querysnapshot : ",querySnapshot!!.documents.toString())
                 for(snapshot in querySnapshot!!.documents){
                     var item = snapshot.toObject(RecruitDTO::class.java)
                     recruitDTOs.add(item)
                     recruitUidList.add(snapshot.id)
-                    Log.d("RecruitDTO snapshot : ",recruitDTOs.toString())
                 }
                 notifyDataSetChanged()
 
@@ -89,17 +106,23 @@ class RecruitFragment : Fragment(){
 
             viewHolder.text_field.text = recruitDTOs!![position].field
 
-            viewHolder.recruit_recyclerview.setOnClickListener{ v ->
+            viewHolder.recruit_recyclerview.setOnClickListener{
 
 
-                var intent = Intent(v.context,RecruitdetailActivity::class.java)
-                intent.putExtra("recruitTitle",recruitDTOs[position].title)
-                intent.putExtra("recruitDate",recruitDTOs[position].date)
-                intent.putExtra("recruitExplain",recruitDTOs[position].explain)
-                intent.putExtra("recruitField",recruitDTOs[position].field)
+                var fragment = RecruitDetailFragment()
+                var bundle = Bundle()
+                bundle.putString("recruitTitle",recruitDTOs[position].title)
+                bundle.putString("recruitDate",recruitDTOs[position].date)
+                bundle.putString("recruitExplain",recruitDTOs[position].explain)
+                bundle.putString("recruitField",recruitDTOs[position].field)
+                bundle.putString("recruitName",recruitDTOs[position].userId)
+                bundle.putString("recruitUid",Uid)
+                bundle.putString("recycleNum",recruitUidList[position])
+                fragment.arguments = bundle
 
+                activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_content,fragment).commit()
 
-                startActivity(intent)
+//
             }
 
 

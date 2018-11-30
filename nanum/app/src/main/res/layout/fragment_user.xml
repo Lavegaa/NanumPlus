@@ -15,21 +15,38 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"/>
-        
-        <Button
-            android:id="@+id/account_btn_follow_signout"
-            android:text="@string/follow"
+       <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/account_iv_profile"
             android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            >
+            <Button
+                android:id="@+id/account_btn_follow_signout"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="2"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/follow" />
+
+            <Button
+                android:id="@+id/btn_set_profile"
+                android:layout_weight="1"
+                android:layout_toRightOf="@+id/account_btn_follow_signout"
+                android:layout_alignParentBottom="true"
+                android:text="수      정"
+                android:layout_width="0dp"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+
         
         <LinearLayout
-            android:gravity="center"
             android:layout_toEndOf="@+id/account_iv_profile"
-            android:layout_above="@+id/account_btn_follow_signout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:gravity="center"

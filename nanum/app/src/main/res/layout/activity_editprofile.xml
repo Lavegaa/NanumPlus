@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditprofileActivity">
+
+
+
+    <TextView
+        android:id="@+id/text_profile_title"
+        android:textSize="20pt"
+        android:layout_marginTop="20dp"
+        android:text="환영합니다"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/text_profile_title"
+    android:layout_marginTop="20dp"
+    >
+    <Button
+        android:background="@color/colorEmailSignIn"
+        android:text="대학생"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/btn_check_student"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:background="@color/colorEmailSignIn"
+        android:text="기     관"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
+        android:id="@+id/btn_check_center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+
+
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:text="확인"
+        android:id="@+id/btn_profile_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+    <EditText
+        android:layout_below="@+id/text_profile_title"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/edit_profile_name"
+        android:text=""
+        android:hint="이름"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+
+    <EditText
+        android:layout_below="@+id/edit_profile_name"
+        android:layout_margin="20dp"
+        android:id="@+id/edit_profile_area"
+        android:text=""
+        android:hint="지역"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+
+
+    <EditText
+        android:layout_below="@+id/edit_profile_area"
+        android:layout_margin="20dp"
+        android:id="@+id/edit_profile_field"
+        android:text=""
+        android:hint="분야"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+</RelativeLayout>

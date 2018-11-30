@@ -9,17 +9,24 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import com.example.chanho.nanum.model.FollowDTO
+import com.example.chanho.nanum.model.ProfileDTO
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_editprofile.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     var PICK_PROFILE_FROM_ALBUM = 10
+    var firestore : FirebaseFirestore? = null
+    var user : FirebaseAuth? = null
+    var uid : String? = null
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         setToolbarDefault()
@@ -31,8 +38,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             }
 
             R.id.action_search ->{
-                var gridFragment = GridFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.main_content,gridFragment).commit()
+                var recruitFragment = RecruitFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.main_content,recruitFragment).commit()
                 return true
             }
 
@@ -66,11 +73,37 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        firestore = FirebaseFirestore.getInstance()
+        user = FirebaseAuth.getInstance()
+
+        uid = user?.currentUser?.uid
+
+
+        firestore?.collection("profiles")?.document(uid!!)?.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+
+            if(documentSnapshot == null) return@addSnapshotListener
+
+            var profileDTO = documentSnapshot.toObject(ProfileDTO::class.java)
+            if(profileDTO == null){
+                profileDTO = ProfileDTO()
+                profileDTO?.uid = uid
+                firestore?.collection("profiles")?.document(uid!!)?.set(profileDTO)
+            }
+
+            if(profileDTO.kind == 0){
+                var followDTO = FollowDTO()
+                firestore!!.collection("users").document(uid!!).set(followDTO)
+                startActivity(Intent(this, EditprofileActivity::class.java))
+
+            }
+
+        }
+
         bottom_navigation.setOnNavigationItemSelectedListener(this)
         bottom_navigation.selectedItemId = R.id.action_home
 
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),1)
-        registerPushToken()
+//        registerPushToken()
     }
 
     fun registerPushToken(){

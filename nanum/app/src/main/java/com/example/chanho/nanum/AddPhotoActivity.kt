@@ -19,7 +19,7 @@ class AddPhotoActivity : AppCompatActivity() {
     val PICK_IMAGE_FROM_ALBUM = 0
     var storage : FirebaseStorage? = null
     var photoUri : Uri? = null
-    var auth : FirebaseAuth? = null;
+    var auth : FirebaseAuth? = null
     var firestore : FirebaseFirestore? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

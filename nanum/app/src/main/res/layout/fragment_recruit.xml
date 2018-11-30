@@ -47,6 +47,7 @@
         android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_addrecruit"
         android:text="추가"
         android:layout_alignParentBottom="true"

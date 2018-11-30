@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/img_applicant_profile"
+        tools:src="@drawable/ic_account"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:text="이름"
+        android:layout_margin="7dp"
+        android:textSize="12pt"
+        android:layout_toRightOf="@+id/img_applicant_profile"
+        android:id="@+id/text_applicant_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="분야"
+        android:textSize="12pt"
+        android:layout_margin="7dp"
+        android:layout_toRightOf="@+id/img_applicant_profile"
+        android:layout_below="@+id/text_applicant_name"
+        android:id="@+id/text_applicant_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_margin="10dp"
+        android:text="모집"
+        android:textSize="12pt"
+        android:layout_alignParentRight="true"
+        android:id="@+id/btn_applicant_submit"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+
+</RelativeLayout>

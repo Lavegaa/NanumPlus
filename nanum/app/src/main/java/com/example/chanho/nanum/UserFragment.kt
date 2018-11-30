@@ -19,8 +19,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.chanho.nanum.model.AlarmDTO
 import com.example.chanho.nanum.model.ContentDTO
 import com.example.chanho.nanum.model.FollowDTO
+import com.example.chanho.nanum.model.ProfileDTO
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_editprofile.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.android.synthetic.main.fragment_user.view.*
@@ -279,6 +282,8 @@ class UserFragment : Fragment() {
         fragmentView = inflater.inflate(R.layout.fragment_user, container, false)
         fcmPush = FcmPush()
         auth = FirebaseAuth.getInstance()
+        var startfragment : String? = null
+        startfragment = arguments!!.getString("startfragment")
         if (arguments != null) {
             uid = arguments!!.getString("destinationUid")
             if (uid != null && uid == currentUserUid) {
@@ -289,6 +294,10 @@ class UserFragment : Fragment() {
                     startActivity(Intent(activity, LoginActivity::class.java))
                     auth?.signOut()
                 }
+
+                fragmentView?.btn_set_profile?.setOnClickListener {
+                    editProfile()
+                }
             } else {
                 //제3자의 유저페이지
                 fragmentView?.account_btn_follow_signout?.text = getString(R.string.follow)
@@ -296,15 +305,38 @@ class UserFragment : Fragment() {
                 mainActivity.toolbar_title_image.visibility = View.GONE
                 mainActivity.toolbar_btn_back.visibility = View.VISIBLE
                 mainActivity.toolbar_username.visibility = View.VISIBLE
+                fragmentView?.btn_set_profile?.visibility = View.GONE
                 mainActivity.toolbar_username.text = arguments!!.getString("userId")
                 mainActivity.toolbar_btn_back.setOnClickListener {
-                    mainActivity.bottom_navigation.selectedItemId = R.id.action_home
+                    if(startfragment == "detailview"){
+                        mainActivity.bottom_navigation.selectedItemId = R.id.action_home
+                        startfragment = null
+                    }else if(startfragment == "recruitdetail"){
+                        var fragment = RecruitDetailFragment()
+                        var bundle = Bundle()
+
+                        bundle.putString("recruitName",arguments!!.getString("recruitName"))
+                        bundle.putString("recruitTitle",arguments!!.getString("recruitTitle"))
+                        bundle.putString("recruitField",arguments!!.getString("recruitField"))
+                        bundle.putString("recruitDate",arguments!!.getString("recruitDate"))
+                        bundle.putString("recycleNum",arguments!!.getString("recycleNum"))
+                        bundle.putString("recruitExplain",arguments!!.getString("recruitExplain"))
+
+
+                        fragment.arguments = bundle
+                        activity!!.supportFragmentManager.beginTransaction().replace(R.id.main_content,fragment).commit()
+                        startfragment = null
+                    }
                 }
                 fragmentView?.account_btn_follow_signout?.setOnClickListener {
                     requestFollow()
                 }
             }
         }
+
+
+
+
         fragmentView?.account_iv_profile?.setOnClickListener {
             var photoPcikerIntent = Intent(Intent.ACTION_PICK)
             photoPcikerIntent.type = "image/*"
@@ -312,6 +344,26 @@ class UserFragment : Fragment() {
         }
         return fragmentView
     }
+
+    fun editProfile(){
+
+        firestore?.collection("profiles")?.whereEqualTo("uid", currentUserUid)?.get()?.addOnCompleteListener { Task->
+            var profileDTO = Task.result.documents.get(0).toObject(ProfileDTO::class.java)
+            var intent = Intent(context,EditprofileActivity::class.java)
+
+            intent.putExtra("name",profileDTO.name)
+            intent.putExtra("area",profileDTO.area)
+            intent.putExtra("field",profileDTO.field)
+            intent.putExtra("explain",profileDTO.expalain)
+            intent.putExtra("kind",profileDTO.kind)
+            startActivity(intent)
+
+        }
+
+
+    }
+
+
     fun requestFollow() {
         var tsDocFollowing = firestore!!.collection("users").document(currentUserUid!!)
         firestore?.runTransaction { transaction ->
